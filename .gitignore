@@ -13,3 +13,4 @@ desktop.ini
 # Temporary files
 *.tmp
 *.log
+.vercel

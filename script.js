@@ -2,6 +2,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     const tabContents = document.querySelectorAll('.tab-content');
+    
+    // Load saved data from localStorage
+    loadSavedData();
 
     // Function to switch tabs
     function switchTab(tabName) {
@@ -111,6 +114,193 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log(`Active sections: ${tabContents.length}`);
     console.log(`Navigation links: ${navLinks.length}`);
 });
+
+// Load saved data from localStorage
+function loadSavedData() {
+    const savedWeeks = localStorage.getItem('portfolioWeeks');
+    const savedAssignments = localStorage.getItem('portfolioAssignments');
+    
+    if (savedWeeks) {
+        const weeks = JSON.parse(savedWeeks);
+        const container = document.getElementById('learningsContainer');
+        const placeholder = container.querySelector('p');
+        if (placeholder) placeholder.remove();
+        
+        weeks.forEach(week => {
+            const weekCard = document.createElement('div');
+            weekCard.className = 'week-card';
+            weekCard.innerHTML = `
+                <div class="week-header">
+                    <h3>Week ${week.number}</h3>
+                    <span class="date">Date: ${week.date}</span>
+                    <button class="btn-delete" onclick="deleteWeek(${week.number})" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Delete</button>
+                </div>
+                <div class="week-content">
+                    <h4>Topics Covered:</h4>
+                    <ul>
+                        ${week.topics.map(topic => `<li>${topic}</li>`).join('')}
+                    </ul>
+                    <h4>Key Learnings:</h4>
+                    <p>${week.learnings}</p>
+                    <h4>Reflections:</h4>
+                    <p>${week.reflections}</p>
+                </div>
+            `;
+            container.appendChild(weekCard);
+        });
+    }
+    
+    if (savedAssignments) {
+        const assignments = JSON.parse(savedAssignments);
+        const container = document.getElementById('assignmentsContainer');
+        const placeholder = container.querySelector('p');
+        if (placeholder) placeholder.remove();
+        
+        assignments.forEach(assignment => {
+            const assignmentCard = document.createElement('div');
+            assignmentCard.className = 'assignment-card';
+            let statusText = 'Pending';
+            if (assignment.status === 'completed') statusText = 'Completed';
+            else if (assignment.status === 'in-progress') statusText = 'In Progress';
+            
+            assignmentCard.innerHTML = `
+                <div class="assignment-header">
+                    <h3>Assignment ${assignment.number}</h3>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <span class="status ${assignment.status}">${statusText}</span>
+                        <button class="btn-delete" onclick="deleteAssignment(${assignment.number})" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Delete</button>
+                    </div>
+                </div>
+                <div class="assignment-details">
+                    <p><strong>Title:</strong> ${assignment.title}</p>
+                    <p><strong>Due Date:</strong> ${assignment.dueDate}</p>
+                    <p><strong>Description:</strong> ${assignment.description}</p>
+                    <p><strong>Grade:</strong> ${assignment.grade}</p>
+                    <div class="assignment-content">
+                        <h4>Overview:</h4>
+                        <p>${assignment.overview}</p>
+                    </div>
+                    ${assignment.link ? `<button class="btn-view" onclick="window.open('${assignment.link}', '_blank')">View Assignment</button>` : ''}
+                </div>
+            `;
+            container.appendChild(assignmentCard);
+        });
+    }
+}
+
+// Save data to localStorage
+function saveToLocalStorage() {
+    const weeks = [];
+    const weekCards = document.querySelectorAll('#learningsContainer .week-card');
+    weekCards.forEach((card, index) => {
+        const weekNumber = index + 1;
+        const date = card.querySelector('.date').textContent.replace('Date: ', '');
+        const topics = Array.from(card.querySelectorAll('.week-content ul li')).map(li => li.textContent);
+        const learnings = card.querySelectorAll('.week-content p')[0].textContent;
+        const reflections = card.querySelectorAll('.week-content p')[1].textContent;
+        
+        weeks.push({ number: weekNumber, date, topics, learnings, reflections });
+    });
+    
+    const assignments = [];
+    const assignmentCards = document.querySelectorAll('#assignmentsContainer .assignment-card');
+    assignmentCards.forEach((card, index) => {
+        const assignmentNumber = index + 1;
+        const title = card.querySelector('.assignment-details p:nth-child(1) strong').nextSibling.textContent.trim();
+        const dueDate = card.querySelector('.assignment-details p:nth-child(2) strong').nextSibling.textContent.trim();
+        const description = card.querySelector('.assignment-details p:nth-child(3) strong').nextSibling.textContent.trim();
+        const grade = card.querySelector('.assignment-details p:nth-child(4) strong').nextSibling.textContent.trim();
+        const overview = card.querySelector('.assignment-content p').textContent;
+        const status = card.querySelector('.status').className.split(' ')[1];
+        const linkBtn = card.querySelector('.btn-view');
+        const link = linkBtn ? linkBtn.getAttribute('onclick').match(/'([^']+)'/)[1] : '';
+        
+        assignments.push({ number: assignmentNumber, title, dueDate, description, grade, overview, status, link });
+    });
+    Save to localStorage
+        saveToLocalStorage();
+        
+        // 
+    localStorage.setItem('portfolioWeeks', JSON.stringify(weeks));
+    localStorage.setItem('portfolioAssignments', JSON.stringify(assignments));
+}
+
+// Delete week
+function deleteWeek(weekNumber) {
+    const card = event.target.closest('.week-card');
+    card.remove();
+    saveToLocalStorage();
+}
+
+// Delete assignment
+function deleteAssignment(assignmentNumber) {
+    const card = event.target.closest('.assignment-card');
+    card.remove();
+    saveToLocalStorage();
+}
+
+// Export to HTML file
+function exportToHTML() {
+    const weeks = JSON.parse(localStorage.getItem('portfolioWeeks') || '[]');
+    const assignments = JSON.parse(localStorage.getItem('portfolioAssignments') || '[]');
+    
+    let weeksHTML = weeks.length > 0 ? '' : '<p style="color: white; text-align: center; font-size: 1.2rem; padding: 2rem;">📚 Click "Add New Week" to start documenting your weekly learnings!</p>';
+    weeks.forEach(week => {
+        weeksHTML += `
+                <div class="week-card">
+                    <div class="week-header">
+                        <h3>Week ${week.number}</h3>
+                        <span class="date">Date: ${week.date}</span>
+                    </div>
+                    <div class="week-content">
+                        <h4>Topics Covered:</h4>
+                        <ul>
+                            ${week.topics.map(topic => `<li>${topic}</li>`).join('')}
+                        </ul>
+                        <h4>Key Learnings:</h4>
+                        <p>${week.learnings}</p>
+                        <h4>Reflections:</h4>
+                        <p>${week.reflections}</p>
+                    </div>
+                </div>
+`;
+    });
+    
+    let assignmentsHTML = assignments.length > 0 ? '' : '<p style="text-align: center; font-size: 1.2rem; padding: 2rem; color: #64748b;">📝 Click "Add New Assignment" to start documenting your assignments!</p>';
+    assignments.forEach(assignment => {
+        let statusText = 'Pending';
+        if (assignment.status === 'completed') statusText = 'Completed';
+        else if (assignment.status === 'in-progress') statusText = 'In Progress';
+        
+        assignmentsHTML += `
+                <div class="assignment-card">
+                    <div class="assignment-header">
+                        <h3>Assignment ${assignment.number}</h3>
+                        <span class="status ${assignment.status}">${statusText}</span>
+                    </div>
+                    <div class="assignment-details">
+                        <p><strong>Title:</strong> ${assignment.title}</p>
+                        <p><strong>Due Date:</strong> ${assignment.dueDate}</p>
+                        <p><strong>Description:</strong> ${assignment.description}</p>
+                        <p><strong>Grade:</strong> ${assignment.grade}</p>
+                        <div class="assignment-content">
+                            <h4>Overview:</h4>
+                            <p>${assignment.overview}</p>
+                        </div>
+                        ${assignment.link ? `<button class="btn-view" onclick="window.open('${assignment.link}', '_blank')">View Assignment</button>` : ''}
+                    </div>
+                </div>
+`;
+    });
+    
+    alert('✅ Data saved! Now:\n\n1. Open VS Code\n2. Replace the content in Weekly Learnings and Assignments sections\n3. Run: git add . && git commit -m "Update portfolio" && git push\n4. Changes will appear on Vercel in ~30 seconds!\n\nYour localStorage data is preserved - you can keep adding more.');
+    
+    console.log('=== WEEKLY LEARNINGS HTML ===');
+    console.log(weeksHTML);
+    console.log('\n=== ASSIGNMENTS HTML ===');
+    console.log(assignmentsHTML);
+    console.log('\nCopy the HTML above and paste into your index.html file, then commit and push to git.');
+}
 
 // Modal functionality
 function openModal(title, formHTML, onSubmit) {
@@ -308,7 +498,10 @@ function addNewAssignment() {
                 ${link ? `<button class="btn-view" onclick="window.open('${link}', '_blank')">View Assignment</button>` : ''}
             </div>
         `;
+        Save to localStorage
+        saveToLocalStorage();
         
+        // 
         container.appendChild(assignmentCard);
         
         // Close modal and scroll to new card
