@@ -2,9 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     const tabContents = document.querySelectorAll('.tab-content');
-    
-    // Load saved data from localStorage
-    loadSavedData();
 
     // Function to switch tabs
     function switchTab(tabName) {
@@ -113,6 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('E-Portfolio loaded successfully!');
     console.log(`Active sections: ${tabContents.length}`);
     console.log(`Navigation links: ${navLinks.length}`);
+    
+    // Load saved data from localStorage after tab setup
+    loadSavedData();
 });
 
 // Load saved data from localStorage
