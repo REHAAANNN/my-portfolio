@@ -1,10 +1,15 @@
 // Tab Navigation Functionality
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded fired!');
     const navLinks = document.querySelectorAll('.nav-link');
     const tabContents = document.querySelectorAll('.tab-content');
+    
+    console.log('Nav links found:', navLinks.length);
+    console.log('Tab contents found:', tabContents.length);
 
     // Function to switch tabs
     function switchTab(tabName) {
+        console.log('Switching to tab:', tabName);
         // Hide all tab contents
         tabContents.forEach(content => {
             content.classList.remove('active');
@@ -17,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Show selected tab content
         const selectedTab = document.getElementById(tabName);
+        console.log('Selected tab element:', selectedTab);
         if (selectedTab) {
             selectedTab.classList.add('active');
         }
@@ -35,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            console.log('Link clicked:', this.getAttribute('data-tab'));
             const tabName = this.getAttribute('data-tab');
             switchTab(tabName);
         });
@@ -63,8 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Console log for debugging
     console.log('E-Portfolio loaded successfully!');
-    console.log(`Active sections: ${tabContents.length}`);
-    console.log(`Navigation links: ${navLinks.length}`);
 });
 
 // Modal functionality
@@ -263,10 +268,7 @@ function addNewAssignment() {
                 ${link ? `<button class="btn-view" onclick="window.open('${link}', '_blank')">View Assignment</button>` : ''}
             </div>
         `;
-        Save to localStorage
-        saveToLocalStorage();
         
-        // 
         container.appendChild(assignmentCard);
         
         // Close modal and scroll to new card
