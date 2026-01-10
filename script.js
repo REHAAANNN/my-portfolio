@@ -217,10 +217,7 @@ function saveToLocalStorage() {
         
         assignments.push({ number: assignmentNumber, title, dueDate, description, grade, overview, status, link });
     });
-    Save to localStorage
-        saveToLocalStorage();
-        
-        // 
+    
     localStorage.setItem('portfolioWeeks', JSON.stringify(weeks));
     localStorage.setItem('portfolioAssignments', JSON.stringify(assignments));
 }
