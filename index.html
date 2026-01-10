@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rehan Ahmed - E-Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Rehan Ahmed - E-Portfolio</h1>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#about" class="nav-link active" data-tab="about">About</a></li>
+                    <li><a href="#learnings" class="nav-link" data-tab="learnings">Weekly Learnings</a></li>
+                    <li><a href="#assignments" class="nav-link" data-tab="assignments">Assignments</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- About Section -->
+        <section id="about" class="tab-content active">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="profile-card">
+                    <div class="profile-image">
+                        <div class="avatar">👤</div>
+                    </div>
+                    <div class="profile-info">
+                        <h3>Rehan Ahmed</h3>
+                        <p class="subtitle">Data Science Student | B.Tech CSE | Developer</p>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3>Introduction</h3>
+                    <p>Welcome to my e-portfolio! I am a Data Science student skilled in Python, statistics, visualization, and machine learning. I am passionate about applying analytical skills to build data-driven solutions and work with real-world datasets to generate meaningful insights. This portfolio showcases my journey through this course, documenting my weekly learnings and assignments.</p>
+                    
+                    <h3>Educational Background</h3>
+                    <p>Currently pursuing <strong>B.Tech in Computer Science and Engineering</strong> at <strong>Graphic Era Hill University, Dehradun</strong> with a CGPA of <strong>8.5</strong> (Expected Graduation: 2027).</p>
+                    <p><strong>Previous Education:</strong><br>
+                    • Doon Public School, Bhaniyawala - Intermediate (2022): 66%<br>
+                    • Doon Public School, Bhaniyawala - High School (2020): 66%</p>
+                    
+                    <h3>Skills & Technical Expertise</h3>
+                    <ul class="skills-list">
+                        <li>Programming: C, C++, Java, Python, SQL, R</li>
+                        <li>Data Science: EDA, Visualization, Statistics, ML Basics</li>
+                        <li>Tools: Jupyter, Pandas, NumPy, Matplotlib, Git</li>
+                        <li>Web Development: React.js, JavaScript, HTML, CSS</li>
+                        <li>Databases: MongoDB, MySQL, Oracle</li>
+                        <li>Problem Solving: 100+ DSA Problems Solved</li>
+                    </ul>
+                    
+                    <h3>Contact Information</h3>
+                    <p><strong>Email:</strong> rehann.ahmed@gmail.com<br>
+                    <strong>Phone:</strong> +91 6398968587<br>
+                    <strong>Location:</strong> Dehradun, India<br>
+                    <strong>LinkedIn:</strong> <a href="https://linkedin.com/in/rehan-ahmed-12380527b" target="_blank">linkedin.com/in/rehan-ahmed-12380527b</a><br>
+                    <strong>GitHub:</strong> <a href="https://github.com/REHAAANNN" target="_blank">github.com/REHAAANNN</a></p>
+                    
+                    <h3>Internship Experience</h3>
+                    <p><strong>Data Science Intern — Prodigy InfoTech (April 2025)</strong><br>
+                    • Performed data cleaning, preprocessing, EDA, and visualization<br>
+                    • Identified patterns and trends in public datasets using Python, Pandas, and Matplotlib<br>
+                    • Prepared structured reports summarizing insights and findings</p>
+                    
+                    <h3>Certifications</h3>
+                    <ul class="skills-list">
+                        <li>Data Structure and Algorithms (IBM-Coursera)</li>
+                        <li>Java Programming (NPTEL – Swayam)</li>
+                        <li>Google Data Analytics Professional Certificate</li>
+                        <li>CISO Data Analytics Certification</li>
+                    </ul>
+                    
+                    <h3>Achievements</h3>
+                    <p>• Winner – Inter-College Cricket Tournament<br>
+                    • Runner-Up – Chess Competition<br>
+                    • Smart India Hackathon Participant<br>
+                    • Solved 100+ DSA Problems</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weekly Learnings Section -->
+        <section id="learnings" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 0;">Weekly Learnings</h2>
+                <button class="btn-add" onclick="addNewWeek()" style="background: #10b981; border-radius: 50px; padding: 0.75rem 1.5rem; color: white; border: none; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: all 0.3s;">+ Add New Week</button>
+            </div>
+            <div class="learnings-container" id="learningsContainer">
+                <p style="color: white; text-align: center; font-size: 1.2rem; padding: 2rem;">
+                    📚 Click "Add New Week" to start documenting your weekly learnings!
+                </p>
+            </div>
+        </section>
+
+        <!-- Assignments Section -->
+        <section id="assignments" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="margin-bottom: 0;">Assignments</h2>
+                <button class="btn-add" onclick="addNewAssignment()" style="background: #3b82f6; border-radius: 50px; padding: 0.75rem 1.5rem; color: white; border: none; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.3s;">+ Add New Assignment</button>
+            </div>
+            <div class="assignments-container" id="assignmentsContainer">
+                <p style="text-align: center; font-size: 1.2rem; padding: 2rem; color: #64748b;">
+                    📝 Click "Add New Assignment" to start documenting your assignments!
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 E-Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Custom Modal for Adding Content -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Add New Entry</h3>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic form content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+                <button class="btn-modal-submit" id="modalSubmit">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
