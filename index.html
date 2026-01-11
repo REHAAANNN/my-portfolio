@@ -28,16 +28,16 @@
             <div class="about-content">
                 <div class="profile-card">
                     <div class="profile-image">
-                        <div class="avatar">👤</div>
+                        <img src="WhatsApp Image 2026-01-11 at 6.24.03 PM.jpeg" alt="Rehan Ahmed" class="profile-photo">
                     </div>
                     <div class="profile-info">
                         <h3>Rehan Ahmed</h3>
-                        <p class="subtitle">Data Science Student | B.Tech CSE | Developer</p>
+                        <p class="subtitle">Data Science Enthusiast | B.Tech CSE</p>
                     </div>
                 </div>
                 <div class="about-text">
                     <h3>Introduction</h3>
-                    <p>Welcome to my e-portfolio! I am a Data Science student skilled in Python, statistics, visualization, and machine learning. I am passionate about applying analytical skills to build data-driven solutions and work with real-world datasets to generate meaningful insights. This portfolio showcases my journey through this course, documenting my weekly learnings and assignments.</p>
+                    <p>Welcome to my professional e-portfolio. I am an aspiring Data Scientist pursuing B.Tech in Computer Science and Engineering, with a strong foundation in Python programming, statistical analysis, and machine learning. My passion lies in transforming complex datasets into actionable insights and developing data-driven solutions to real-world challenges. This portfolio documents my academic journey, technical growth, and hands-on experience in data science.</p>
                     
                     <h3>Educational Background</h3>
                     <p>Currently pursuing <strong>B.Tech in Computer Science and Engineering</strong> at <strong>Graphic Era Hill University, Dehradun</strong> with a CGPA of <strong>8.5</strong> (Expected Graduation: 2027).</p>
@@ -87,27 +87,17 @@
 
         <!-- Weekly Learnings Section -->
         <section id="learnings" class="tab-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                <h2 style="margin-bottom: 0;">Weekly Learnings</h2>
-                <button class="btn-add" onclick="addNewWeek()" style="background: #10b981; border-radius: 50px; padding: 0.75rem 1.5rem; color: white; border: none; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: all 0.3s;">+ Add New Week</button>
-            </div>
+            <h2>Weekly Learnings</h2>
             <div class="learnings-container" id="learningsContainer">
-                <p style="color: white; text-align: center; font-size: 1.2rem; padding: 2rem;">
-                    📚 Click "Add New Week" to start documenting your weekly learnings!
-                </p>
+                <!-- Content loaded from script.js -->
             </div>
         </section>
 
         <!-- Assignments Section -->
         <section id="assignments" class="tab-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                <h2 style="margin-bottom: 0;">Assignments</h2>
-                <button class="btn-add" onclick="addNewAssignment()" style="background: #3b82f6; border-radius: 50px; padding: 0.75rem 1.5rem; color: white; border: none; cursor: pointer; font-weight: 600; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.3s;">+ Add New Assignment</button>
-            </div>
+            <h2>Assignments</h2>
             <div class="assignments-container" id="assignmentsContainer">
-                <p style="text-align: center; font-size: 1.2rem; padding: 2rem; color: #64748b;">
-                    📝 Click "Add New Assignment" to start documenting your assignments!
-                </p>
+                <!-- Content loaded from script.js -->
             </div>
         </section>
     </main>
@@ -117,23 +107,6 @@
             <p>&copy; 2026 E-Portfolio. All rights reserved.</p>
         </div>
     </footer>
-
-    <!-- Custom Modal for Adding Content -->
-    <div id="customModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Add New Entry</h3>
-                <span class="modal-close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Dynamic form content will be inserted here -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
-                <button class="btn-modal-submit" id="modalSubmit">Add</button>
-            </div>
-        </div>
-    </div>
 
 </body>
 </html>

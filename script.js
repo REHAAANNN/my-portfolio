@@ -1,15 +1,53 @@
-// Tab Navigation Functionality
+// ========================================
+// HARD-CODED DATA FOR PORTFOLIO
+// Edit this section to add/update your weeks and assignments
+// ========================================
+
+const portfolioData = {
+    weeks: [
+        {
+            weekNumber: 1,
+            date: 'Jan 5, 2026',
+            topics: ['Absent'],
+            learnings: 'I was absent during this week and missed the class.',
+            reflections: 'Will catch up on the missed material by reviewing course notes and reaching out to classmates for updates.'
+        },
+        // Add more weeks here as objects in this array
+        // Example:
+        // {
+        //     weekNumber: 2,
+        //     date: 'Jan 13, 2026',
+        //     topics: ['Pandas', 'Data Manipulation'],
+        //     learnings: 'Explored pandas library...',
+        //     reflections: 'Very useful for data handling...'
+        // }
+    ],
+    assignments: [
+        // No assignments completed yet - will be updated as I complete them
+        // Add your first assignment using the format below:
+        // {
+        //     assignmentNumber: 1,
+        //     title: 'Assignment Title',
+        //     dueDate: 'Due Date',
+        //     description: 'Assignment description',
+        //     status: 'pending', // Options: 'pending', 'in-progress', 'completed'
+        //     grade: 'Pending',
+        //     overview: 'Overview of your work...',
+        //     link: '' // Optional: GitHub or project link
+        // }
+    ]
+};
+
+// ========================================
+// TAB NAVIGATION FUNCTIONALITY
+// ========================================
+
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOMContentLoaded fired!');
     const navLinks = document.querySelectorAll('.nav-link');
     const tabContents = document.querySelectorAll('.tab-content');
-    
-    console.log('Nav links found:', navLinks.length);
-    console.log('Tab contents found:', tabContents.length);
 
     // Function to switch tabs
     function switchTab(tabName) {
-        console.log('Switching to tab:', tabName);
         // Hide all tab contents
         tabContents.forEach(content => {
             content.classList.remove('active');
@@ -22,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Show selected tab content
         const selectedTab = document.getElementById(tabName);
-        console.log('Selected tab element:', selectedTab);
         if (selectedTab) {
             selectedTab.classList.add('active');
         }
@@ -41,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Link clicked:', this.getAttribute('data-tab'));
             const tabName = this.getAttribute('data-tab');
             switchTab(tabName);
         });
@@ -68,217 +104,85 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize on page load
     handleInitialHash();
 
-    // Console log for debugging
-    console.log('E-Portfolio loaded successfully!');
+    // Load portfolio content
+    loadWeeks();
+    loadAssignments();
 });
 
-// Modal functionality
-function openModal(title, formHTML, onSubmit) {
-    const modal = document.getElementById('customModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    const submitBtn = document.getElementById('modalSubmit');
-    
-    modalTitle.textContent = title;
-    modalBody.innerHTML = formHTML;
-    modal.classList.add('active');
-    
-    // Remove old event listeners
-    const newSubmitBtn = submitBtn.cloneNode(true);
-    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
-    
-    // Add new event listener
-    document.getElementById('modalSubmit').addEventListener('click', onSubmit);
-    
-    // Focus first input
-    const firstInput = modalBody.querySelector('input, textarea');
-    if (firstInput) {
-        setTimeout(() => firstInput.focus(), 100);
+// ========================================
+// LOAD WEEKS FROM DATA
+// ========================================
+
+function loadWeeks() {
+    const container = document.getElementById('learningsContainer');
+    container.innerHTML = ''; // Clear existing content
+
+    if (portfolioData.weeks.length === 0) {
+        container.innerHTML = '<p style="color: #64748b; text-align: center; font-size: 1.2rem; padding: 2rem;">📚 No weeks added yet.</p>';
+        return;
     }
-}
 
-function closeModal() {
-    const modal = document.getElementById('customModal');
-    modal.classList.remove('active');
-}
-
-// Close modal on outside click
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('customModal');
-    if (event.target === modal) {
-        closeModal();
-    }
-});
-
-// Function to add a new week interactively
-function addNewWeek() {
-    const formHTML = `
-        <div class="modal-form-group">
-            <label for="weekDate">📅 Date:</label>
-            <input type="text" id="weekDate" placeholder="e.g., Jan 10, 2026" required>
-        </div>
-        <div class="modal-form-group">
-            <label for="weekTopics">📚 Topics Covered (separate with commas):</label>
-            <textarea id="weekTopics" placeholder="Topic 1, Topic 2, Topic 3" required></textarea>
-        </div>
-        <div class="modal-form-group">
-            <label for="weekLearnings">💡 Key Learnings:</label>
-            <textarea id="weekLearnings" placeholder="Describe what you learned this week..." required></textarea>
-        </div>
-        <div class="modal-form-group">
-            <label for="weekReflections">💭 Reflections:</label>
-            <textarea id="weekReflections" placeholder="Share your thoughts and reflections..." required></textarea>
-        </div>
-    `;
-    
-    openModal('Add New Week', formHTML, function() {
-        const date = document.getElementById('weekDate').value || 'Date TBA';
-        const topicsInput = document.getElementById('weekTopics').value || 'No topics added';
-        const learnings = document.getElementById('weekLearnings').value || 'Add your key learnings here';
-        const reflections = document.getElementById('weekReflections').value || 'Add your reflections here';
-        
-        const topics = topicsInput.split(',').map(t => t.trim());
-        
-        const container = document.getElementById('learningsContainer');
-        
-        // Remove placeholder message if it exists
-        const placeholder = container.querySelector('p');
-        if (placeholder && placeholder.textContent.includes('Click')) {
-            placeholder.remove();
-        }
-        
-        // Get week number
-        const existingWeeks = container.querySelectorAll('.week-card').length;
-        const weekNumber = existingWeeks + 1;
-        
-        // Create week card
+    portfolioData.weeks.forEach(week => {
         const weekCard = document.createElement('div');
         weekCard.className = 'week-card';
         weekCard.innerHTML = `
             <div class="week-header">
-                <h3>Week ${weekNumber}</h3>
-                <span class="date">Date: ${date}</span>
-                <button class="btn-delete" onclick="this.closest('.week-card').remove()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Delete</button>
+                <h3>Week ${week.weekNumber}</h3>
+                <span class="date">Date: ${week.date}</span>
             </div>
             <div class="week-content">
                 <h4>Topics Covered:</h4>
                 <ul>
-                    ${topics.map(topic => `<li>${topic}</li>`).join('')}
+                    ${week.topics.map(topic => `<li>${topic}</li>`).join('')}
                 </ul>
                 <h4>Key Learnings:</h4>
-                <p>${learnings}</p>
+                <p>${week.learnings}</p>
                 <h4>Reflections:</h4>
-                <p>${reflections}</p>
+                <p>${week.reflections}</p>
             </div>
         `;
-        
         container.appendChild(weekCard);
-        
-        // Close modal and scroll to new card
-        closeModal();
-        setTimeout(() => {
-            weekCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
     });
 }
 
-// Function to add a new assignment interactively
-function addNewAssignment() {
-    const formHTML = `
-        <div class="modal-form-group">
-            <label for="assignmentTitle">📝 Assignment Title:</label>
-            <input type="text" id="assignmentTitle" placeholder="Enter assignment title" required>
-        </div>
-        <div class="modal-form-group">
-            <label for="assignmentDueDate">📅 Due Date:</label>
-            <input type="text" id="assignmentDueDate" placeholder="e.g., Jan 15, 2026" required>
-        </div>
-        <div class="modal-form-group">
-            <label for="assignmentDescription">📋 Description:</label>
-            <textarea id="assignmentDescription" placeholder="Brief description of the assignment" required></textarea>
-        </div>
-        <div class="modal-form-group">
-            <label for="assignmentStatus">✅ Status:</label>
-            <select id="assignmentStatus">
-                <option value="pending">Pending</option>
-                <option value="in-progress">In Progress</option>
-                <option value="completed">Completed</option>
-            </select>
-        </div>
-        <div class="modal-form-group">
-            <label for="assignmentGrade">🎯 Grade:</label>
-            <input type="text" id="assignmentGrade" placeholder="e.g., A+ or 95/100 (or leave empty)" >
-        </div>
-        <div class="modal-form-group">
-            <label for="assignmentOverview">📖 Overview:</label>
-            <textarea id="assignmentOverview" placeholder="Detailed overview of what you accomplished..." required></textarea>
-        </div>
-        <div class="modal-form-group">
-            <label for="assignmentLink">🔗 Link (optional):</label>
-            <input type="url" id="assignmentLink" placeholder="https://github.com/...">
-        </div>
-    `;
-    
-    openModal('Add New Assignment', formHTML, function() {
-        const title = document.getElementById('assignmentTitle').value || 'Untitled Assignment';
-        const dueDate = document.getElementById('assignmentDueDate').value || 'TBA';
-        const description = document.getElementById('assignmentDescription').value || 'No description provided';
-        const status = document.getElementById('assignmentStatus').value;
-        const grade = document.getElementById('assignmentGrade').value || 'Pending';
-        const overview = document.getElementById('assignmentOverview').value || 'To be updated...';
-        const link = document.getElementById('assignmentLink').value || '';
-        
+// ========================================
+// LOAD ASSIGNMENTS FROM DATA
+// ========================================
+
+function loadAssignments() {
+    const container = document.getElementById('assignmentsContainer');
+    container.innerHTML = ''; // Clear existing content
+
+    if (portfolioData.assignments.length === 0) {
+        container.innerHTML = '<p style="text-align: center; font-size: 1.2rem; padding: 2rem; color: #64748b;">📝 No assignments added yet.</p>';
+        return;
+    }
+
+    portfolioData.assignments.forEach(assignment => {
         // Status badge text
         let statusText = 'Pending';
-        if (status === 'completed') statusText = 'Completed';
-        else if (status === 'in-progress') statusText = 'In Progress';
-        
-        const container = document.getElementById('assignmentsContainer');
-        
-        // Remove placeholder message if it exists
-        const placeholder = container.querySelector('p');
-        if (placeholder && placeholder.textContent.includes('Click')) {
-            placeholder.remove();
-        }
-        
-        // Get assignment number
-        const existingAssignments = container.querySelectorAll('.assignment-card').length;
-        const assignmentNumber = existingAssignments + 1;
-        
-        // Create assignment card
+        if (assignment.status === 'completed') statusText = 'Completed';
+        else if (assignment.status === 'in-progress') statusText = 'In Progress';
+
         const assignmentCard = document.createElement('div');
         assignmentCard.className = 'assignment-card';
         assignmentCard.innerHTML = `
             <div class="assignment-header">
-                <h3>Assignment ${assignmentNumber}</h3>
-                <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <span class="status ${status}">${statusText}</span>
-                    <button class="btn-delete" onclick="this.closest('.assignment-card').remove()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Delete</button>
-                </div>
+                <h3>Assignment ${assignment.assignmentNumber}</h3>
+                <span class="status ${assignment.status}">${statusText}</span>
             </div>
             <div class="assignment-details">
-                <p><strong>Title:</strong> ${title}</p>
-                <p><strong>Due Date:</strong> ${dueDate}</p>
-                <p><strong>Description:</strong> ${description}</p>
-                <p><strong>Grade:</strong> ${grade}</p>
+                <p><strong>Title:</strong> ${assignment.title}</p>
+                <p><strong>Due Date:</strong> ${assignment.dueDate}</p>
+                <p><strong>Description:</strong> ${assignment.description}</p>
+                <p><strong>Grade:</strong> ${assignment.grade}</p>
                 <div class="assignment-content">
                     <h4>Overview:</h4>
-                    <p>${overview}</p>
+                    <p>${assignment.overview}</p>
                 </div>
-                ${link ? `<button class="btn-view" onclick="window.open('${link}', '_blank')">View Assignment</button>` : ''}
+                ${assignment.link ? `<button class="btn-view" onclick="window.open('${assignment.link}', '_blank')">View Assignment</button>` : ''}
             </div>
         `;
-        
         container.appendChild(assignmentCard);
-        
-        // Close modal and scroll to new card
-        closeModal();
-        setTimeout(() => {
-            assignmentCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
     });
 }
-
-// Example usage (uncomment to test):
-// addWeek(5, '2026-02-10', ['Topic 1', 'Topic 2'], 'This week we learned...', 'My reflection...');
-// addAssignment(4, 'Final Project', '2026-03-15', 'Complete final project', 'Pending');
