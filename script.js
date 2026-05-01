@@ -233,18 +233,26 @@ Personal action items:\n
         // Add more weeks here as objects in this array
     ],
     assignments: [
-        // No assignments completed yet - will be updated as I complete them
-        // Add your first assignment using the format below:
-        // {
-        //     assignmentNumber: 1,
-        //     title: 'Assignment Title',
-        //     dueDate: 'Due Date',
-        //     description: 'Assignment description',
-        //     status: 'pending', // Options: 'pending', 'in-progress', 'completed'
-        //     grade: 'Pending',
-        //     overview: 'Overview of your work...',
-        //     link: '' // Optional: GitHub or project link
-        // }
+        {
+            assignmentNumber: 1,
+            title: 'Week 7 Essay Assignment',
+            dueDate: 'Completed',
+            description: 'Essay writing fundamentals assignment based on Week 7 learnings',
+            status: 'completed',
+            grade: 'Pending Review',
+            overview: 'This assignment focuses on applying essay writing fundamentals covered in Week 7, including essay structure, types of essays (descriptive, narrative, expository, persuasive, analytical), and characteristics of effective writing. Click the button below to view the assignment details.',
+            link: 'https://drive.google.com/file/d/15gjtATYQNl2RJZMzFpcgi42ztFmVC_so/view?usp=drivesdk'
+        },
+        {
+            assignmentNumber: 2,
+            title: 'Week 4 Self Introduction Video',
+            dueDate: 'Completed',
+            description: '1-minute self-introduction video from Week 4 - Peer presentations on stage',
+            status: 'completed',
+            grade: 'Pending Review',
+            overview: 'This is a 1-minute self-introduction video recorded during Week 4. The session focused on self-introduction practice, peer presentations on stage, observing different speaking styles, and handling pauses during live delivery. This video demonstrates my introduction covering background, skills, and career goals.',
+            link: 'https://drive.google.com/file/d/1dHNJZY5uU-W0W8k87aF91b5fGOCmJy9S/view?usp=drivesdk'
+        }
     ]
 };
 
